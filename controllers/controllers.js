@@ -1,8 +1,12 @@
 const { google } = require("googleapis");
 const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const tz = require("dayjs/plugin/timezone");
 const { auth } = require("../auth/auth");
 require("dotenv").config();
 
+dayjs.extend(utc);
+dayjs.extend(tz);
 const sheets = google.sheets({ version: "v4", auth });
 
 const submitResponse = async (req, res) => {
@@ -24,7 +28,7 @@ const submitResponse = async (req, res) => {
         companyName,
         email,
         message,
-        dayjs().format("YYYY-MM-DD HH:mm:ss"),
+        dayjs().tz("Asia/Kolkata").format("YYYY-MM-DD HH:mm"),
       ],
     ];
 
